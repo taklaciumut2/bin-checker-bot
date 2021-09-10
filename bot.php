@@ -1,70 +1,51 @@
 <?php
     date_default_timezone_set("Asia/kolkata");
     //Data From Webhook
-    $content = file_get_contents("php://input");
-    $update = json_decode($content, true);
-    $chat_id = $update["message"]["chat"]["id"];
-    $message = $update["message"]["text"];
-    $message_id = $update["message"]["message_id"];
-    $id = $update["message"]["from"]["id"];
-    $username = $update["message"]["from"]["username"];
-    $firstname = $update["message"]["from"]["first_name"];
-    $start_msg = $_ENV['START_MSG']; 
+$botToken = "1943544838:AAGum4eOm8mfUaI8RgfW4hDpA3ngYUEXPv0"; // Enter ur bot token
+$website = "https://api.telegram.org/bot".$botToken;
+error_reporting(0);
+$update = file_get_contents('php://input');
+$update = json_decode($update, TRUE);
+$print = print_r($update);
+$chatId = $update["message"]["chat"]["id"];
+$gId = $update["message"]["from"]["id"];
+$userId = $update["message"]["from"]["id"];
+$firstname = $update["message"]["from"]["first_name"];
+$username = $update["message"]["from"]["username"];
+$message = $update["message"]["text"];
+$message_id = $update["message"]["message_id"];
 
-if($message == "/start"){
-    send_message($chat_id,$message_id, "***Hey $firstname \nUse !bin xxxxxx to Check BIN \n$start_msg***");
+if ((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)){
+sendMessage($chatId, "<b>Hello there!!%0A%0A%0ABot Made by: Andry Mata</b>");
 }
 
-//Bin Lookup
-if(strpos($message, "!bin") === 0){
-    $bin = substr($message, 5);
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-    CURLOPT_URL => "https://binssuapi.vercel.app/api/".$bin,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => [
-    "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-    "sec-fetch-dest: document",
-    "sec-fetch-site: none",
-    "user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
-   ],
-   ]);
-
- $result = curl_exec($curl);
- curl_close($curl);
- $data = json_decode($result, true);
- $bank = $data['data']['bank'];
- $country = $data['data']['country'];
- $brand = $data['data']['vendor'];
- $level = $data['data']['level'];
- $type = $data['data']['type'];
-$flag = $data['data']['countryInfo']['emoji'];
- $result1 = $data['result'];
-
-    if ($result1 == true) {
-    send_message($chat_id,$message_id, "***✅ Valid BIN
-Bin: $bin
-Brand: $brand
-Level: $level
-Bank: $bank
-Country: $country $flag
-Type:$type
-Checked By @$username ***");
-    }
-else {
-    send_message($chat_id,$message_id, "***Enter Valid BIN***");
+elseif ((strpos($message, "!sk") === 0)||(strpos($message, "/sk") === 0)){
+$sec = substr($message, 4);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/tokens');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "card[number]=5154620061414478&card[exp_month]=01&card[exp_year]=2023&card[cvc]=235");
+curl_setopt($ch, CURLOPT_USERPWD, $sec. ':' . '');
+$headers = array();
+$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+$result = curl_exec($ch);
+if (strpos($result, 'api_key_expired')){
+sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> EXPIRED KEY%0A%0A<b>Bot Made by: Andry Mata </b>");
 }
+elseif (strpos($result, 'Invalid API Key provided')){
+sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> INVALID KEY%0A%0A<b>Bot Made by: Andry Mata </b>");
 }
-    function send_message($chat_id,$message_id, $message){
-        $text = urlencode($message);
-        $apiToken = $_ENV['API_TOKEN'];  
-        file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?chat_id=$chat_id&reply_to_message_id=$message_id&text=$text&parse_mode=Markdown");
-    }
+elseif ((strpos($result, 'testmode_charges_only')) || (strpos($result, 'test_mode_live_card'))){
+sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> Testmode Charges Only%0A%0A<b>Bot Made by: Andry Mata </b>");
+}else{
+sendMessage($chatId, "<b>✅ LIVE KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>RESPONSE:</u> SK LIVE!!%0A%0A<b>Bot Made by: Andry Mata </b>");
+}}
+    
+
+function sendMessage ($chatId, $message){
+$url = $GLOBALS['website']."/sendMessage?chat_id=".$chatId."&text=".$message."&reply_to_message_id=".$message_id."&parse_mode=HTML";
+file_get_contents($url);      
+}
+    
 ?>
