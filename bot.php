@@ -16,7 +16,7 @@ $message = $update["message"]["text"];
 $message_id = $update["message"]["message_id"];
 
 if ((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)){
-sendMessage($chatId, "<b>Hello there!!%0A%0A%0ABot Made by: Andry Mata</b>");
+sendMessage($chatId, "<b>Hello there!!%0A%0A%0ABot Made by: @b5kci</b>");
 }
 
 elseif ((strpos($message, "!sk") === 0)||(strpos($message, "/sk") === 0)){
