@@ -27,6 +27,32 @@ sendMessage($chatId, "<u>SK Key Check:</u> <code>!sk</code> sk_live%0A<u>Stripe 
 
 /////////////////////////////////////////////////CHK/////////////////////////////////////////////////
 
+if ((strpos($message, "!ccn") === 0)||(strpos($message, "/ccn") === 0)){
+$lista = substr($message, 5);
+$i     = explode("|", $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = $i[2];
+$ano1 = substr($yyyy, 2, 4);
+$cvv   = $i[3];
+error_reporting(0);
+date_default_timezone_set('Asia/Jakarta');
+if ($_SERVER['REQUEST_METHOD'] == "POST"){
+extract($_POST);
+}
+elseif ($_SERVER['REQUEST_METHOD'] == "GET"){
+extract($_GET);
+}
+function GetStr($string, $start, $end){
+$str = explode($start, $string);
+$str = explode($end, $str[1]);  
+return $str[0];
+};
+$separa = explode("|", $lista);
+$cc = $separa[0];
+$mes = $separa[1];
+$ano = $separa[2];
+$cvv = $separa[3];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$cc.'');
