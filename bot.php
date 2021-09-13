@@ -1,7 +1,7 @@
 <?php
     date_default_timezone_set("Asia/kolkata");
     //Data From Webhook
-$botToken = "1943544838:AAGum4eOm8mfUaI8RgfW4hDpA3ngYUEXPv0"; // Enter ur bot token
+$botToken = "1943544838:AAHD2_WFWrkKc52-QlHSdFzrElEcMkhZ9Cw"; // Enter ur bot token
 $website = "https://api.telegram.org/bot".$botToken;
 error_reporting(0);
 $update = file_get_contents('php://input');
@@ -16,16 +16,8 @@ $message = $update["message"]["text"];
 $message_id = $update["message"]["message_id"];
 
 if ((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)){
-sendMessage($chatId, "<b>Hello there!!%0AType /cmds to know all my commands!!%0A%0ABot Made by: @b5kci</b>");
+sendMessage($chatId, "<b>Hello there!!%0A%0A%0ABot Made by: Andry Mata</b>");
 }
-
-
-elseif ((strpos($message, "!cmds") === 0)||(strpos($message, "/cmds") === 0)){
-sendMessage($chatId, "<u>SK Key Check:</u> <code>!sk</code> sk_live%0A<u>Stripe Donation CCN:</u> <code>!ccn</code> xxxxxxxxxxxxxxxx|xx|xx|xxx%0A<b>Bot Made by: @b5kci</b>");
-}
-
-
-
 
 elseif ((strpos($message, "!sk") === 0)||(strpos($message, "/sk") === 0)){
 $sec = substr($message, 4);
@@ -39,15 +31,15 @@ $headers[] = 'Content-Type: application/x-www-form-urlencoded';
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $result = curl_exec($ch);
 if (strpos($result, 'api_key_expired')){
-sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> EXPIRED KEY%0A%0A<b>Bot Made by: Bekci </b>");
+sendMessage($chatId, "<b>? DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> EXPIRED KEY%0A%0A<b>Bot Made by: Andry Mata </b>");
 }
 elseif (strpos($result, 'Invalid API Key provided')){
-sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> INVALID KEY%0A%0A<b>Bot Made by: Bekci </b>");
+sendMessage($chatId, "<b>? DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> INVALID KEY%0A%0A<b>Bot Made by: Andry Mata </b>");
 }
 elseif ((strpos($result, 'testmode_charges_only')) || (strpos($result, 'test_mode_live_card'))){
-sendMessage($chatId, "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> Testmode Charges Only%0A%0A<b>Bot Made by: Bekci</b>");
+sendMessage($chatId, "<b>? DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> Testmode Charges Only%0A%0A<b>Bot Made by: Andry Mata </b>");
 }else{
-sendMessage($chatId, "<b>✅ LIVE KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>RESPONSE:</u> SK LIVE!!%0A%0A<b>Bot Made by: Bekci </b>");
+sendMessage($chatId, "<b>? LIVE KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>RESPONSE:</u> SK LIVE!!%0A%0A<b>Bot Made by: Andry Mata </b>");
 }}
     
 
