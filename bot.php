@@ -21,7 +21,7 @@ sendMessage($chatId, "<b>Hello there!!%0AType /cmds to know all my commands!!%0A
 
 
 elseif ((strpos($message, "!cmds") === 0)||(strpos($message, "/cmds") === 0)){
-sendMessage($chatId, "<u><u>SK Key Check:</u> <code>!sk</code> sk_live%0A<u>Stripe Donation CCN:</u> <code>!ccn</code> xxxxxxxxxxxxxxxx|xx|xx|xxx%0A<b>Bot Made by: @b5kci</b>");
+sendMessage($chatId, "<u>SK Key Check:</u> <code>!sk</code> sk_live%0A<u>Stripe Donation CCN:</u> <code>!ccn</code> xxxxxxxxxxxxxxxx|xx|xx|xxx%0A<b>Bot Made by: @b5kci</b>");
 }
 
 
