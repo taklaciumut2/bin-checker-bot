@@ -27,7 +27,7 @@ sendMessage($chatId, "<u>SK Key Check:</u> <code>!sk</code> sk_live%0A<u>Stripe 
 
 /////////////////////////////////////////////////CHK/////////////////////////////////////////////////
 
-if ((strpos($message, "!ccn") === 0)||(strpos($message, "/ccn") === 0)){
+elseif ((strpos($message, "!ccn") === 0)||(strpos($message, "/ccn") === 0)){
 $lista = substr($message, 5);
 $i     = explode("|", $lista);
 $cc    = $i[0];
