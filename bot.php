@@ -1,7 +1,7 @@
 <?php
     date_default_timezone_set("Asia/kolkata");
     //Data From Webhook
-$botToken = "1943544838:AAHD2_WFWrkKc52-QlHSdFzrElEcMkhZ9Cw"; // Enter ur bot token
+$botToken = "1943544838:AAEmkLuX4IYr1ZR1-WK2FxRbUJccyuM8pT8"; // Enter ur bot token
 $website = "https://api.telegram.org/bot".$botToken;
 error_reporting(0);
 $update = file_get_contents('php://input');
